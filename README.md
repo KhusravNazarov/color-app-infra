@@ -1,1 +1,1 @@
-# color-app-infra
+This repository is to build color-app-infra

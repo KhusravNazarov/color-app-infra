@@ -1,10 +1,10 @@
-pipeline{
-    agent any
-    stages{
-        stage(test){
-            step{
-                sh 'pwd'
-            }
-        }
-    }
-}
+// pipeline{
+//     agent any
+//     stages{
+//         stage(init){
+//             steps{
+//                 sh 'trerraform init'
+//             }
+//         }
+//     }
+// }

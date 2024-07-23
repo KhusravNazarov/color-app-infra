@@ -1,10 +1,20 @@
-pipeline{
+pipeline {
     agent any
-    stages{
-        stage(pwd){
+
+    stages {
+        stage("init"){
             steps{
-                sh 'pwd'
+                sh "terraform init"
             }
         }
+        stage("plan"){
+            steps{
+                script{
+                    sh "terraform init"
+                    sh "terraform plan"
+                }
+            }
+        }
+            
     }
 }

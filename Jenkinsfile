@@ -4,10 +4,12 @@ pipeline {
     stages {
         stage("init"){
             steps{
+                dir('infra'){
                 sh """
                 terraform init
                 terraform validate
                 """
+                }
             }
         }
         stage("plan"){
@@ -18,14 +20,19 @@ pipeline {
                 }
             }
         }
-        post {
-            failure {
-                echo 'Build failed!'
-            }
-            success{
-                echo 'Build success!'
-            }
-        }
-            
     }
+    post{
+        failure {
+            echo 'Build failed!'
+        }
+        success{
+            echo 'Build success!'
+                
+        }
+        always{
+            cleanWs()
+        }
+    }
+            
+    
 }

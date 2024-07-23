@@ -4,7 +4,10 @@ pipeline {
     stages {
         stage("init"){
             steps{
-                sh "terraform init"
+                sh """
+                terraform init
+                terraform validate
+                """
             }
         }
         stage("plan"){
@@ -15,12 +18,12 @@ pipeline {
                 }
             }
         }
-        stage("pwd"){
-            steps{
-                sh """
-                pwd
-                whoami
-                """
+        post {
+            failure {
+                echo 'Build failed!'
+            }
+            success{
+                echo 'Build success!'
             }
         }
             

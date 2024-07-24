@@ -20,6 +20,17 @@ pipeline {
                 }
             }
         }
+        stage("apply"){
+            when{
+                branch 'main'
+            }
+            steps{
+                script{
+                    sh "terraform init"
+                    sh "terraform apply"
+                }
+            }
+        }
     }
     post{
         failure {

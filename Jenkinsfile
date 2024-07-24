@@ -27,9 +27,11 @@ pipeline {
                 branch 'main'
             }
             steps{
+                dir('infra'){
                 script{
                     sh "terraform init"
                     sh "terraform apply"
+                }
                 }
             }
         }

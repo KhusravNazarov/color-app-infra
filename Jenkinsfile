@@ -14,9 +14,11 @@ pipeline {
         }
         stage("plan"){
             steps{
+                dir('infra'){
                 script{
                     sh "terraform init"
                     sh "terraform plan"
+                }
                 }
             }
         }

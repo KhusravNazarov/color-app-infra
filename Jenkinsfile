@@ -4,31 +4,50 @@ pipeline {
     stages {
         stage("init"){
             steps{
-                sh "terraform init"
+                dir('infra'){
+                sh """
+                terraform init
+                terraform validate
+                """
+                }
             }
         }
         stage("plan"){
             steps{
+                dir('infra'){
                 script{
                     sh "terraform init"
                     sh "terraform plan"
                 }
-            }
-        }
-        stage('deploy') {
-            steps {
-                input message: 'Do you want to approve the deployment?', ok: 'Yes'
-                echo "Initiating deployment"
-            }
-        }
-        stage("apply"){
-            steps{
-                script{
-                    sh "terraform init"
-                    sh "apply -auto-approve"
                 }
             }
         }
-            
+        stage("apply"){
+            when{
+                branch 'main'
+            }
+            steps{
+                dir('infra'){
+                script{
+                    sh "terraform init"
+                    sh "terraform apply"
+                }
+                }
+            }
+        }
     }
+    post{
+        failure {
+            echo 'Build failed!'
+        }
+        success{
+            echo 'Build success!'
+                
+        }
+        always{
+            cleanWs()
+        }
+    }
+            
+    
 }

@@ -30,7 +30,7 @@ pipeline {
                 dir('infra'){
                 script{
                     sh "terraform init"
-                    sh "terraform apply"
+                    sh "terraform apply -y"
                 }
                 }
             }
